@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/hotel_app_theme.dart';
+import '../theme/shopping_app_theme.dart';
 
 class RangeSliderView extends StatefulWidget {
   const RangeSliderView(
@@ -72,8 +72,8 @@ class _RangeSliderViewState extends State<RangeSliderView> {
           ),
           SliderTheme(
             data: SliderThemeData(
-              // rangeThumbShape: CustomRangeThumbShape(),
-            ),
+                // rangeThumbShape: CustomRangeThumbShape(),
+                ),
             child: RangeSlider(
               values: _values,
               min: 0.0,

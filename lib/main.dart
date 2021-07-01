@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_ui/screens/hotel_home_screen.dart';
-import 'package:shopping_ui/theme/hotel_app_theme.dart';
+import 'package:shopping_ui/screens/shopping_home_screen.dart';
+import 'package:shopping_ui/theme/shopping_app_theme.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Shopping UI',
       theme: HotelAppTheme.buildLightTheme(),
-      home: HotelHomeScreen(),
+      home: ShoppingHomeScreen(),
     );
   }
 }

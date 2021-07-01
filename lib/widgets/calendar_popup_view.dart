@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:shopping_ui/theme/hotel_app_theme.dart';
+import 'package:shopping_ui/theme/shopping_app_theme.dart';
 
 import '../widgets/custom_calendar.dart';
 
@@ -216,7 +216,8 @@ class _CalendarPopupViewState extends State<CalendarPopupView>
                                         // animationController.reverse().then((f) {
 
                                         // });
-                                        widget.onApplyClick(startDate!, endDate!);
+                                        widget.onApplyClick(
+                                            startDate!, endDate!);
                                         Navigator.pop(context);
                                       } catch (_) {}
                                     },

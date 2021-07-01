@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shopping_ui/models/hotel_list_data.dart';
-import 'package:shopping_ui/theme/hotel_app_theme.dart';
+import 'package:shopping_ui/models/shopping_list_data.dart';
+import 'package:shopping_ui/theme/shopping_app_theme.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-
-class HotelListView extends StatelessWidget {
-  const HotelListView(
+class ShoppingListView extends StatelessWidget {
+  const ShoppingListView(
       {Key? key,
-      required this.hotelData,
+      required this.shoppingData,
       required this.animationController,
       required this.animation,
       required this.callback})
       : super(key: key);
 
   final VoidCallback callback;
-  final HotelListData hotelData;
+  final ShoppingListData shoppingData;
   final AnimationController animationController;
   final Animation<double> animation;
 
@@ -57,7 +56,7 @@ class HotelListView extends StatelessWidget {
                             AspectRatio(
                               aspectRatio: 2,
                               child: Image.asset(
-                                hotelData.imagePath,
+                                shoppingData.imagePath,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -80,7 +79,7 @@ class HotelListView extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Text(
-                                              hotelData.titleTxt,
+                                              shoppingData.titleTxt,
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w600,
@@ -94,7 +93,7 @@ class HotelListView extends StatelessWidget {
                                                   MainAxisAlignment.start,
                                               children: <Widget>[
                                                 Text(
-                                                  hotelData.subTxt,
+                                                  shoppingData.subTxt,
                                                   style: TextStyle(
                                                       fontSize: 14,
                                                       color: Colors.grey
@@ -112,7 +111,7 @@ class HotelListView extends StatelessWidget {
                                                 ),
                                                 Expanded(
                                                   child: Text(
-                                                    '${hotelData.dist.toStringAsFixed(1)} km to city',
+                                                    '${shoppingData.dist.toStringAsFixed(1)} km to city',
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     style: TextStyle(
@@ -131,7 +130,7 @@ class HotelListView extends StatelessWidget {
                                                   SmoothStarRating(
                                                     allowHalfRating: true,
                                                     starCount: 5,
-                                                    rating: hotelData.rating,
+                                                    rating: shoppingData.rating,
                                                     size: 20,
                                                     color: HotelAppTheme
                                                             .buildLightTheme()
@@ -141,7 +140,7 @@ class HotelListView extends StatelessWidget {
                                                         .primaryColor,
                                                   ),
                                                   Text(
-                                                    ' ${hotelData.reviews} Reviews',
+                                                    ' ${shoppingData.reviews} Reviews',
                                                     style: TextStyle(
                                                         fontSize: 14,
                                                         color: Colors.grey
@@ -165,7 +164,7 @@ class HotelListView extends StatelessWidget {
                                           CrossAxisAlignment.end,
                                       children: <Widget>[
                                         Text(
-                                          '\$${hotelData.perNight}',
+                                          '\$${shoppingData.perNight}',
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:shopping_ui/theme/hotel_app_theme.dart';
+import 'package:shopping_ui/theme/shopping_app_theme.dart';
 
 class CustomCalendarView extends StatefulWidget {
   const CustomCalendarView(

@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_ui/models/popular_filter_list.dart';
-import 'package:shopping_ui/theme/hotel_app_theme.dart';
+import 'package:shopping_ui/theme/shopping_app_theme.dart';
 import 'package:shopping_ui/widgets/range_slider_view.dart';
 import 'package:shopping_ui/widgets/slider_view.dart';
-
 
 class FiltersScreen extends StatefulWidget {
   @override

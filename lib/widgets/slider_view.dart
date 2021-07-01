@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/hotel_app_theme.dart';
+import '../theme/shopping_app_theme.dart';
 
 class SliderView extends StatefulWidget {
   const SliderView(
