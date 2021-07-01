@@ -1,11 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:shopping_ui/models/shopping_list_data.dart';
 import 'package:shopping_ui/theme/shopping_app_theme.dart';
 import 'package:shopping_ui/widgets/calendar_popup_view.dart';
+import 'package:shopping_ui/widgets/custom_search_delegate.dart';
 import 'package:shopping_ui/widgets/shopping_list_view.dart';
 
 class ShoppingHomeScreen extends StatefulWidget {
@@ -16,7 +16,7 @@ class ShoppingHomeScreen extends StatefulWidget {
 class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
     with TickerProviderStateMixin {
   late AnimationController animationController;
-  List<Product> shoppingList = Product.shoppingList;
+  List<Product> productList = Product.demoProducts;
   final ScrollController _scrollController = ScrollController();
 
   DateTime startDate = DateTime.now();
@@ -76,13 +76,13 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
                         color:
                             ShoppingAppTheme.buildLightTheme().backgroundColor,
                         child: ListView.builder(
-                          itemCount: shoppingList.length,
+                          itemCount: productList.length,
                           padding: const EdgeInsets.only(top: 8),
                           scrollDirection: Axis.vertical,
                           itemBuilder: (BuildContext context, int index) {
-                            final int count = shoppingList.length > 10
+                            final int count = productList.length > 10
                                 ? 10
-                                : shoppingList.length;
+                                : productList.length;
                             final Animation<double> animation =
                                 Tween<double>(begin: 0.0, end: 1.0).animate(
                                     CurvedAnimation(
@@ -93,7 +93,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
                             animationController.forward();
                             return ShoppingListView(
                               callback: () {},
-                              shoppingData: shoppingList[index],
+                              shoppingData: productList[index],
                               animation: animation,
                               animationController: animationController,
                             );
@@ -133,11 +133,11 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
                   return const SizedBox();
                 } else {
                   return ListView.builder(
-                    itemCount: shoppingList.length,
+                    itemCount: productList.length,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context, int index) {
                       final int count =
-                          shoppingList.length > 10 ? 10 : shoppingList.length;
+                          productList.length > 10 ? 10 : productList.length;
                       final Animation<double> animation =
                           Tween<double>(begin: 0.0, end: 1.0).animate(
                               CurvedAnimation(
@@ -148,7 +148,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
 
                       return ShoppingListView(
                         callback: () {},
-                        shoppingData: shoppingList[index],
+                        shoppingData: productList[index],
                         animation: animation,
                         animationController: animationController,
                       );
@@ -164,9 +164,9 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
   }
 
   Widget getHotelViewList() {
-    final List<Widget> shoppingListViews = <Widget>[];
-    for (int i = 0; i < shoppingList.length; i++) {
-      final int count = shoppingList.length;
+    final List<Widget> productListViews = <Widget>[];
+    for (int i = 0; i < productList.length; i++) {
+      final int count = productList.length;
       final Animation<double> animation =
           Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
@@ -174,10 +174,10 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
           curve: Interval((1 / count) * i, 1.0, curve: Curves.fastOutSlowIn),
         ),
       );
-      shoppingListViews.add(
+      productListViews.add(
         ShoppingListView(
           callback: () {},
-          shoppingData: shoppingList[i],
+          shoppingData: productList[i],
           animation: animation,
           animationController: animationController,
         ),
@@ -185,7 +185,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
     }
     animationController.forward();
     return Column(
-      children: shoppingListViews,
+      children: productListViews,
     );
   }
 
@@ -356,9 +356,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
                     borderRadius: const BorderRadius.all(
                       Radius.circular(4.0),
                     ),
-                    onTap: () {
-                      
-                    },
+                    onTap: () {},
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: Row(
@@ -471,7 +469,11 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
                       borderRadius: const BorderRadius.all(
                         Radius.circular(32.0),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        showSearch(
+                            context: context,
+                            delegate: CustomSearchDelegate());
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(Icons.search),

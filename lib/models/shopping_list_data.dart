@@ -13,7 +13,7 @@ class Product {
     this.categoryId,
   });
 
-  static List<Product> shoppingList = <Product>[
+  static List<Product> demoProducts = <Product>[
     Product(
       image: 'assets/images/shopping_1.jpeg',
       name: 'Dragon Fruit (Red flesh) ',
