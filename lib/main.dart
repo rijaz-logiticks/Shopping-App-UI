@@ -11,9 +11,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Shopping UI',
-      theme: HotelAppTheme.buildLightTheme(),
+      title: 'Shopping App',
+      theme: ShoppingAppTheme.buildLightTheme(),
       home: ShoppingHomeScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

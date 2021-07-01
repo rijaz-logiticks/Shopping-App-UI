@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shopping_ui/models/shopping_list_data.dart';
 import 'package:shopping_ui/theme/shopping_app_theme.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:shopping_ui/widgets/utils.dart';
 
 class ShoppingListView extends StatelessWidget {
   const ShoppingListView(
@@ -14,7 +14,7 @@ class ShoppingListView extends StatelessWidget {
       : super(key: key);
 
   final VoidCallback callback;
-  final ShoppingListData shoppingData;
+  final Product shoppingData;
   final AnimationController animationController;
   final Animation<double> animation;
 
@@ -56,135 +56,82 @@ class ShoppingListView extends StatelessWidget {
                             AspectRatio(
                               aspectRatio: 2,
                               child: Image.asset(
-                                shoppingData.imagePath,
+                                shoppingData.image ?? '',
                                 fit: BoxFit.cover,
                               ),
                             ),
                             Container(
-                              color: HotelAppTheme.buildLightTheme()
+                              color: ShoppingAppTheme.buildLightTheme()
                                   .backgroundColor,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 16, top: 8, bottom: 8),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Text(
-                                              shoppingData.titleTxt,
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 22,
-                                              ),
-                                            ),
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text(
-                                                  shoppingData.subTxt,
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.grey
-                                                          .withOpacity(0.8)),
-                                                ),
-                                                const SizedBox(
-                                                  width: 4,
-                                                ),
-                                                Icon(
-                                                  FontAwesomeIcons.mapMarkerAlt,
-                                                  size: 12,
-                                                  color: HotelAppTheme
-                                                          .buildLightTheme()
-                                                      .primaryColor,
-                                                ),
-                                                Expanded(
-                                                  child: Text(
-                                                    '${shoppingData.dist.toStringAsFixed(1)} km to city',
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.grey
-                                                            .withOpacity(0.8)),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.only(top: 4),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  SmoothStarRating(
-                                                    allowHalfRating: true,
-                                                    starCount: 5,
-                                                    rating: shoppingData.rating,
-                                                    size: 20,
-                                                    color: HotelAppTheme
-                                                            .buildLightTheme()
-                                                        .primaryColor,
-                                                    borderColor: HotelAppTheme
-                                                            .buildLightTheme()
-                                                        .primaryColor,
-                                                  ),
-                                                  Text(
-                                                    ' ${shoppingData.reviews} Reviews',
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.grey
-                                                            .withOpacity(0.8)),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 16, top: 8, bottom: 8, right: 16),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      shoppingData.name ?? '',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 22,
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 16, top: 8),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 16, top: 5),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: <Widget>[
+                                          Text(
+                                            'Rs ${shoppingData.price}',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Row(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.end,
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         Text(
-                                          '\$${shoppingData.perNight}',
-                                          textAlign: TextAlign.left,
+                                          shoppingData.quantity ?? '',
                                           style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 22,
-                                          ),
-                                        ),
-                                        Text(
-                                          '/per night',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color:
-                                                  Colors.grey.withOpacity(0.8)),
+                                              fontSize: 18, color: Colors.grey),
                                         ),
                                       ],
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ],
+                        ),
+                        Positioned(
+                          bottom: 8,
+                          right: 8,
+                          child: IconButton(
+                            iconSize: 20,
+                            padding: EdgeInsets.all(0),
+                            icon: Icon(
+                              FontAwesomeIcons.cartPlus,
+                              color: ShoppingAppTheme.buildLightTheme()
+                                  .primaryColor,
+                            ),
+                            onPressed: () {
+                              showSnack('Added to cart', context);
+                            },
+                          ),
                         ),
                         Positioned(
                           top: 8,
@@ -195,12 +142,14 @@ class ShoppingListView extends StatelessWidget {
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(32.0),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                showSnack('Added to wishlist', context);
+                              },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Icon(
                                   Icons.favorite_border,
-                                  color: HotelAppTheme.buildLightTheme()
+                                  color: ShoppingAppTheme.buildLightTheme()
                                       .primaryColor,
                                 ),
                               ),

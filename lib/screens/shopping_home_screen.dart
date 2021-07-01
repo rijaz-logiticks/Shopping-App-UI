@@ -7,7 +7,6 @@ import 'package:shopping_ui/models/shopping_list_data.dart';
 import 'package:shopping_ui/theme/shopping_app_theme.dart';
 import 'package:shopping_ui/widgets/calendar_popup_view.dart';
 import 'package:shopping_ui/widgets/shopping_list_view.dart';
-import 'filters_screen.dart';
 
 class ShoppingHomeScreen extends StatefulWidget {
   @override
@@ -17,7 +16,7 @@ class ShoppingHomeScreen extends StatefulWidget {
 class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
     with TickerProviderStateMixin {
   late AnimationController animationController;
-  List<ShoppingListData> shoppingList = ShoppingListData.shoppingList;
+  List<Product> shoppingList = Product.shoppingList;
   final ScrollController _scrollController = ScrollController();
 
   DateTime startDate = DateTime.now();
@@ -64,16 +63,6 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
                       headerSliverBuilder:
                           (BuildContext context, bool innerBoxIsScrolled) {
                         return <Widget>[
-                          SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                                (BuildContext context, int index) {
-                              return Column(
-                                children: <Widget>[
-                                  getTimeDateUI(),
-                                ],
-                              );
-                            }, childCount: 1),
-                          ),
                           SliverPersistentHeader(
                             pinned: true,
                             floating: true,
@@ -84,7 +73,8 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
                         ];
                       },
                       body: Container(
-                        color: HotelAppTheme.buildLightTheme().backgroundColor,
+                        color:
+                            ShoppingAppTheme.buildLightTheme().backgroundColor,
                         child: ListView.builder(
                           itemCount: shoppingList.length,
                           padding: const EdgeInsets.only(top: 8),
@@ -124,7 +114,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
   Widget getListUI() {
     return Container(
       decoration: BoxDecoration(
-        color: HotelAppTheme.buildLightTheme().backgroundColor,
+        color: ShoppingAppTheme.buildLightTheme().backgroundColor,
         boxShadow: <BoxShadow>[
           BoxShadow(
               color: Colors.grey.withOpacity(0.2),
@@ -327,7 +317,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
           child: Container(
             height: 24,
             decoration: BoxDecoration(
-              color: HotelAppTheme.buildLightTheme().backgroundColor,
+              color: ShoppingAppTheme.buildLightTheme().backgroundColor,
               boxShadow: <BoxShadow>[
                 BoxShadow(
                     color: Colors.grey.withOpacity(0.2),
@@ -338,7 +328,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
           ),
         ),
         Container(
-          color: HotelAppTheme.buildLightTheme().backgroundColor,
+          color: ShoppingAppTheme.buildLightTheme().backgroundColor,
           child: Padding(
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 4),
@@ -348,10 +338,10 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      '530 shoppings found',
+                      'Popular products',
                       style: TextStyle(
-                        fontWeight: FontWeight.w100,
-                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 17,
                       ),
                     ),
                   ),
@@ -367,13 +357,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
                       Radius.circular(4.0),
                     ),
                     onTap: () {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      Navigator.push<dynamic>(
-                        context,
-                        MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) => FiltersScreen(),
-                            fullscreenDialog: true),
-                      );
+                      
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8),
@@ -388,8 +372,8 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Icon(Icons.sort,
-                                color: HotelAppTheme.buildLightTheme()
+                            child: Icon(Icons.sort_sharp,
+                                color: ShoppingAppTheme.buildLightTheme()
                                     .primaryColor),
                           ),
                         ],
@@ -439,7 +423,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
   Widget getAppBarUI() {
     return Container(
       decoration: BoxDecoration(
-        color: HotelAppTheme.buildLightTheme().backgroundColor,
+        color: ShoppingAppTheme.buildLightTheme().backgroundColor,
         boxShadow: <BoxShadow>[
           BoxShadow(
               color: Colors.grey.withOpacity(0.2),
@@ -454,7 +438,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
           children: <Widget>[
             Expanded(
               child: Text(
-                'Shopping UI',
+                'Shopping App',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 22,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_ui/models/hex_color.dart';
 
-class HotelAppTheme {
+class ShoppingAppTheme {
   static TextTheme _buildTextTheme(TextTheme base) {
     const String fontName = 'WorkSans';
     return base.copyWith(

@@ -62,7 +62,7 @@ class _SliderViewState extends State<SliderView> {
               },
               min: 0,
               max: 100,
-              activeColor: HotelAppTheme.buildLightTheme().primaryColor,
+              activeColor: ShoppingAppTheme.buildLightTheme().primaryColor,
               inactiveColor: Colors.grey.withOpacity(0.4),
               divisions: 100,
               value: distValue,
