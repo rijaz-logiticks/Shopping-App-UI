@@ -1,11 +1,11 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 
-void showSnack(String text, BuildContext context) {
+void showSnack(String text, BuildContext context,{Color? bgColor}) {
     Flushbar(
       margin: const EdgeInsets.all(8.0),
       borderRadius: 8.0,
-      backgroundColor: Colors.green.shade500,
+      backgroundColor: bgColor ?? Colors.green.shade500,
       animationDuration: Duration(milliseconds: 300),
       isDismissible: true,
       boxShadows: [
@@ -17,7 +17,7 @@ void showSnack(String text, BuildContext context) {
         )
       ],
       shouldIconPulse: false,
-      duration: Duration(milliseconds: 2000),
+      duration: Duration(seconds: 2),
       icon: Icon(
         Icons.check,
         color: Colors.white,

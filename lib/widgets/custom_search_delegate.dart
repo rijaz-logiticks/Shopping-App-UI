@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_ui/models/shopping_list_data.dart';
+import 'package:shopping_ui/models/product.dart';
 import 'package:shopping_ui/theme/shopping_app_theme.dart';
 import 'package:shopping_ui/widgets/shopping_list_view.dart';
 
-import 'search_product_item.dart';
+import 'product_item_view.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   @override
@@ -53,7 +53,7 @@ class CustomSearchDelegate extends SearchDelegate {
         padding: const EdgeInsets.only(top: 8),
         scrollDirection: Axis.vertical,
         itemBuilder: (BuildContext context, int index) {
-          return SearchProductItem(
+          return ProductItemView(
             callback: () {},
             product: products[index],
           );
@@ -75,7 +75,7 @@ class CustomSearchDelegate extends SearchDelegate {
         padding: const EdgeInsets.only(top: 8),
         scrollDirection: Axis.vertical,
         itemBuilder: (BuildContext context, int index) {
-          return SearchProductItem(
+          return ProductItemView(
             callback: () {},
             product: products[index],
           );

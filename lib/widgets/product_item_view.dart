@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shopping_ui/models/shopping_list_data.dart';
+import 'package:shopping_ui/blocs/cart_bloc/cart_bloc.dart';
+import 'package:shopping_ui/models/product.dart';
 import 'package:shopping_ui/theme/shopping_app_theme.dart';
 import 'package:shopping_ui/widgets/utils.dart';
 
-class SearchProductItem extends StatelessWidget {
-  const SearchProductItem(
+class ProductItemView extends StatelessWidget {
+  const ProductItemView(
       {Key? key, required this.product, required this.callback})
       : super(key: key);
 
@@ -104,9 +106,12 @@ class SearchProductItem extends StatelessWidget {
                     padding: EdgeInsets.all(0),
                     icon: Icon(
                       FontAwesomeIcons.cartPlus,
-                      color: ShoppingAppTheme.buildLightTheme().primaryColor,
+                      color: Theme.of(context).primaryColor,
                     ),
                     onPressed: () {
+                      CartBloc cartBloc = BlocProvider.of<CartBloc>(context);
+                      cartBloc.add(AddToCartEvent(productId: product.id));
+
                       showSnack('Added to cart', context);
                     },
                   ),
@@ -116,6 +121,7 @@ class SearchProductItem extends StatelessWidget {
                   right: 8,
                   child: Material(
                     color: Colors.transparent,
+                    shadowColor: Colors.grey,
                     child: InkWell(
                       borderRadius: const BorderRadius.all(
                         Radius.circular(32.0),
@@ -127,8 +133,7 @@ class SearchProductItem extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(
                           Icons.favorite_border,
-                          color:
-                              ShoppingAppTheme.buildLightTheme().primaryColor,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                     ),

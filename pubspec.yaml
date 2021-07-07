@@ -27,7 +27,9 @@ dependencies:
   intl:
   font_awesome_flutter: 
   cupertino_icons: ^1.0.2
-  flushbar: 
+  flushbar:
+  flutter_bloc: ^7.0.1 
+  shimmer: ^1.1.2
 
 
 dev_dependencies:

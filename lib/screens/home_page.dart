@@ -1,26 +1,23 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:shopping_ui/models/shopping_list_data.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping_ui/blocs/cart_bloc/cart_bloc.dart';
+import 'package:shopping_ui/models/product.dart';
 import 'package:shopping_ui/theme/shopping_app_theme.dart';
-import 'package:shopping_ui/widgets/calendar_popup_view.dart';
+import 'package:shopping_ui/widgets/common/cart_fab_button.dart';
 import 'package:shopping_ui/widgets/custom_search_delegate.dart';
 import 'package:shopping_ui/widgets/shopping_list_view.dart';
 
-class ShoppingHomeScreen extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _ShoppingHomeScreenState createState() => _ShoppingHomeScreenState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
-    with TickerProviderStateMixin {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late AnimationController animationController;
   List<Product> productList = Product.demoProducts;
   final ScrollController _scrollController = ScrollController();
-
-  DateTime startDate = DateTime.now();
-  DateTime endDate = DateTime.now().add(const Duration(days: 5));
 
   @override
   void initState() {
@@ -44,6 +41,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
+        floatingActionButton: CartFABButton(context),
         body: Stack(
           children: <Widget>[
             InkWell(
@@ -77,7 +75,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
                             ShoppingAppTheme.buildLightTheme().backgroundColor,
                         child: ListView.builder(
                           itemCount: productList.length,
-                          padding: const EdgeInsets.only(top: 8),
+                          padding: const EdgeInsets.only(top: 8, bottom: 60),
                           scrollDirection: Axis.vertical,
                           itemBuilder: (BuildContext context, int index) {
                             final int count = productList.length > 10
@@ -93,7 +91,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
                             animationController.forward();
                             return ShoppingListView(
                               callback: () {},
-                              shoppingData: productList[index],
+                              product: productList[index],
                               animation: animation,
                               animationController: animationController,
                             );
@@ -148,7 +146,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
 
                       return ShoppingListView(
                         callback: () {},
-                        shoppingData: productList[index],
+                        product: productList[index],
                         animation: animation,
                         animationController: animationController,
                       );
@@ -177,7 +175,7 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
       productListViews.add(
         ShoppingListView(
           callback: () {},
-          shoppingData: productList[i],
+          product: productList[i],
           animation: animation,
           animationController: animationController,
         ),
@@ -186,124 +184,6 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
     animationController.forward();
     return Column(
       children: productListViews,
-    );
-  }
-
-  Widget getTimeDateUI() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 18, bottom: 16),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Row(
-              children: <Widget>[
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    focusColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    splashColor: Colors.grey.withOpacity(0.2),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(4.0),
-                    ),
-                    onTap: () {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      // setState(() {
-                      //   isDatePopupOpen = true;
-                      // });
-                      showDemoDialog(context: context);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 8, right: 8, top: 4, bottom: 4),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'Choose date',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w100,
-                                fontSize: 16,
-                                color: Colors.grey.withOpacity(0.8)),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            '${DateFormat("dd, MMM").format(startDate)} - ${DateFormat("dd, MMM").format(endDate)}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w100,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: Container(
-              width: 1,
-              height: 42,
-              color: Colors.grey.withOpacity(0.8),
-            ),
-          ),
-          Expanded(
-            child: Row(
-              children: <Widget>[
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    focusColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    splashColor: Colors.grey.withOpacity(0.2),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(4.0),
-                    ),
-                    onTap: () {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 8, right: 8, top: 4, bottom: 4),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'Number of Rooms',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w100,
-                                fontSize: 16,
-                                color: Colors.grey.withOpacity(0.8)),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            '1 Room - 2 Adults',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w100,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -356,13 +236,16 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
                     borderRadius: const BorderRadius.all(
                       Radius.circular(4.0),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      showSearch(
+                          context: context, delegate: CustomSearchDelegate());
+                    },
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: Row(
                         children: <Widget>[
                           Text(
-                            'Filter',
+                            'Search',
                             style: TextStyle(
                               fontWeight: FontWeight.w100,
                               fontSize: 16,
@@ -370,9 +253,10 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Icon(Icons.sort_sharp,
-                                color: ShoppingAppTheme.buildLightTheme()
-                                    .primaryColor),
+                            child: Icon(
+                              Icons.search,
+                              color: Theme.of(context).primaryColor,
+                            ),
                           ),
                         ],
                       ),
@@ -392,29 +276,6 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
           ),
         )
       ],
-    );
-  }
-
-  void showDemoDialog({required BuildContext context}) {
-    showDialog<dynamic>(
-      context: context,
-      builder: (BuildContext context) => CalendarPopupView(
-        barrierDismissible: true,
-        minimumDate: DateTime.now(),
-        maximumDate: DateTime(DateTime.now().year, DateTime.now().month + 1,
-            DateTime.now().day + 10),
-        initialEndDate: endDate,
-        initialStartDate: startDate,
-        onApplyClick: (DateTime startData, DateTime endData) {
-          setState(() {
-            if (startData != null && endData != null) {
-              startDate = startData;
-              endDate = endData;
-            }
-          });
-        },
-        onCancelClick: () {},
-      ),
     );
   }
 
@@ -460,23 +321,6 @@ class _ShoppingHomeScreenState extends State<ShoppingHomeScreen>
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(Icons.favorite_border),
-                      ),
-                    ),
-                  ),
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(32.0),
-                      ),
-                      onTap: () {
-                        showSearch(
-                            context: context,
-                            delegate: CustomSearchDelegate());
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.search),
                       ),
                     ),
                   ),

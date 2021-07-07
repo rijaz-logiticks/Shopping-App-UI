@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_ui/screens/shopping_home_screen.dart';
-import 'package:shopping_ui/theme/shopping_app_theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'app.dart';
+import 'blocs/cart_bloc/cart_bloc.dart';
 
 void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Shopping App',
-      theme: ShoppingAppTheme.buildLightTheme(),
-      home: ShoppingHomeScreen(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (context) => CartBloc(),
+      ),
+    ],
+    child: ShoppingApp(),
+  ));
 }
