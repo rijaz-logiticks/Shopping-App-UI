@@ -181,7 +181,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             value: 3,
                             groupValue: selectedPayment,
                             title: Text(
-                              'Pay via Razorpay',
+                              'Pay online',
                               style: TextStyle(
                                 color: Colors.black87,
                                 fontSize: 14.0,

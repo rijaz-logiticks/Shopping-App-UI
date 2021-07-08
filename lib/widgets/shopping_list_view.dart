@@ -28,7 +28,6 @@ class ShoppingListView extends StatelessWidget {
                 0.0, 50 * (1.0 - animation.value), 0.0),
             child: ProductItemView(
               product: product,
-              callback: () {},
             ),
           ),
         );

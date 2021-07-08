@@ -3,15 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shopping_ui/blocs/cart_bloc/cart_bloc.dart';
 import 'package:shopping_ui/models/product.dart';
+import 'package:shopping_ui/screens/product_detail_page.dart';
 import 'package:shopping_ui/theme/shopping_app_theme.dart';
 import 'package:shopping_ui/widgets/utils.dart';
 
 class ProductItemView extends StatelessWidget {
-  const ProductItemView(
-      {Key? key, required this.product, required this.callback})
-      : super(key: key);
+  const ProductItemView({Key? key, required this.product}) : super(key: key);
 
-  final VoidCallback callback;
   final Product product;
 
   @override
@@ -21,7 +19,8 @@ class ProductItemView extends StatelessWidget {
       child: InkWell(
         splashColor: Colors.transparent,
         onTap: () {
-          callback();
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ProductDetailPage(product: product)));
         },
         child: Container(
           decoration: BoxDecoration(

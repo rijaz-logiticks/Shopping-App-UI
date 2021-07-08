@@ -54,7 +54,6 @@ class CustomSearchDelegate extends SearchDelegate {
         scrollDirection: Axis.vertical,
         itemBuilder: (BuildContext context, int index) {
           return ProductItemView(
-            callback: () {},
             product: products[index],
           );
         },
@@ -76,7 +75,6 @@ class CustomSearchDelegate extends SearchDelegate {
         scrollDirection: Axis.vertical,
         itemBuilder: (BuildContext context, int index) {
           return ProductItemView(
-            callback: () {},
             product: products[index],
           );
         },
