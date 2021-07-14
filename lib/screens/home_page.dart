@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_ui/blocs/cart_bloc/cart_bloc.dart';
 import 'package:shopping_ui/models/product.dart';
+import 'package:shopping_ui/screens/wishlist_page.dart';
 import 'package:shopping_ui/theme/shopping_app_theme.dart';
 import 'package:shopping_ui/widgets/common/cart_fab_button.dart';
 import 'package:shopping_ui/widgets/custom_search_delegate.dart';
@@ -317,7 +318,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       borderRadius: const BorderRadius.all(
                         Radius.circular(32.0),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => WishlistPage()));
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(Icons.favorite_border),

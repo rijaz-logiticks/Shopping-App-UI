@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shopping_ui/blocs/cart_bloc/cart_bloc.dart';
 
 import 'package:shopping_ui/models/product.dart';
+import 'package:shopping_ui/widgets/delete_confirm_dialog.dart';
 
 import '../config.dart';
 
@@ -46,12 +47,11 @@ class CartItem extends StatelessWidget {
             children: <Widget>[
               Text('${index + 1}' + ') ',
                   style: TextStyle(
-                    color: Colors.black.withOpacity(0.8),
-                    fontSize: 13.0,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.3,
-                    height: 1.5
-                  )),
+                      color: Colors.black.withOpacity(0.8),
+                      fontSize: 13.0,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0.3,
+                      height: 1.5)),
               Expanded(
                 child: Text(
                   '${product.name}' +
@@ -60,51 +60,50 @@ class CartItem extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: Colors.black.withOpacity(0.8),
-                    fontSize: 13.0,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.8,
-                    height: 1.5
-                  ),
+                      color: Colors.black.withOpacity(0.8),
+                      fontSize: 13.0,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0.8,
+                      height: 1.5),
                 ),
               ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(50.0),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    splashColor: Colors.blue.withOpacity(0.5),
-                    onTap: () {
-                      print('remove from cart');
+              // ClipRRect(
+              //   borderRadius: BorderRadius.circular(50.0),
+              //   child: Material(
+              //     color: Colors.transparent,
+              //     child: InkWell(
+              //       splashColor: Colors.blue.withOpacity(0.5),
+              //       onTap: () {
+              //         print('remove from cart');
 
-                      cartBloc.add(
-                        RemoveFromCartEvent(
-                          productId: cartProducts[index].id,
-                        ),
-                      );
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                      ),
-                      width: 33.0,
-                      height: 30.0,
-                      child: Icon(
-                        Icons.delete,
-                        color: Colors.black.withOpacity(0.45),
-                        size: 24.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              //         cartBloc.add(
+              //           RemoveFromCartEvent(
+              //             productId: cartProducts[index].id,
+              //           ),
+              //         );
+              //       },
+              //       child: Container(
+              //         decoration: BoxDecoration(
+              //           color: Colors.transparent,
+              //         ),
+              //         width: 33.0,
+              //         height: 30.0,
+              //         child: Icon(
+              //           Icons.delete,
+              //           color: Colors.black.withOpacity(0.45),
+              //           size: 24.0,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           SizedBox(
             height: 12,
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 8.0, right: 40.0, left: 25),
+            padding: const EdgeInsets.only(bottom: 8.0, right: 15.0, left: 25),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
@@ -121,41 +120,57 @@ class CartItem extends StatelessWidget {
                 ),
                 Row(
                   children: <Widget>[
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(4.0),
-                      child: Material(
-                        child: InkWell(
-                          splashColor: Theme.of(context).primaryColor,
-                          onTap: () {
-                            int tempQuan = product.cartCount!;
-                            if (tempQuan > 1) {
+                    Material(
+                      borderRadius: BorderRadius.circular(15.0),
+                      elevation: 1,
+                      child: InkWell(
+                        onTap: () async {
+                          int tempQuan = product.cartCount!;
+                          if (tempQuan > 1) {
+                            cartBloc.add(
+                              DecreaseQuantityEvent(
+                                productId: cartProducts[index].id,
+                              ),
+                            );
+                          } else {
+                            bool? res = await showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) {
+                                return DeleteConfirmDialog(
+                                  message:
+                                      'Do you want to remove this product?',
+                                );
+                              },
+                            );
+
+                            if (res == true) {
                               cartBloc.add(
-                                DecreaseQuantityEvent(
+                                RemoveFromCartEvent(
                                   productId: cartProducts[index].id,
                                 ),
                               );
                             }
-                            cartProducts[index].cartCount = tempQuan;
-                          },
-                          child: Container(
-                            width: 25.0,
-                            height: 22.0,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                            child: Icon(
-                              Icons.remove,
-                              color: Colors.white,
-                              size: 12.0,
-                            ),
+                          }
+                          cartProducts[index].cartCount = tempQuan;
+                        },
+                        child: Container(
+                          width: 30.0,
+                          height: 30.0,
+                          // decoration: BoxDecoration(
+                          //    color: Theme.of(context).primaryColor,
+                          //   borderRadius: BorderRadius.circular(12.0),
+                          // ),
+                          child: Icon(
+                            Icons.remove,
+                            // color: Colors.white,
+                            size: 20.0,
                           ),
                         ),
                       ),
                     ),
                     Container(
-                      width: 32.0,
-                      height: 25.0,
+                      padding: EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
                         '${product.cartCount ?? 0}',
                         textAlign: TextAlign.center,
@@ -167,36 +182,35 @@ class CartItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(4.0),
-                      child: Material(
-                        child: InkWell(
-                          splashColor: Theme.of(context).primaryColor,
-                          onTap: () {
-                            int tempQuan = product.cartCount ?? 0;
+                    Material(
+                      borderRadius: BorderRadius.circular(15.0),
+                      elevation: 1,
+                      child: InkWell(
+                        splashColor: Theme.of(context).primaryColor,
+                        onTap: () {
+                          int tempQuan = product.cartCount ?? 0;
 
-                            if (tempQuan <= (product.maxQuantity ?? 50)) {
-                              cartBloc.add(
-                                IncreaseQuantityEvent(
-                                  productId: cartProducts[index].id,
-                                ),
-                              );
+                          if (tempQuan <= (product.maxQuantity ?? 50)) {
+                            cartBloc.add(
+                              IncreaseQuantityEvent(
+                                productId: cartProducts[index].id,
+                              ),
+                            );
 
-                              cartProducts[index].cartCount = tempQuan;
-                            }
-                          },
-                          child: Container(
-                            width: 25.0,
-                            height: 22.0,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
-                              size: 12.0,
-                            ),
+                            cartProducts[index].cartCount = tempQuan;
+                          }
+                        },
+                        child: Container(
+                          width: 30.0,
+                          height: 30.0,
+                          decoration: BoxDecoration(
+                              // color: Theme.of(context).primaryColor,
+                              // borderRadius: BorderRadius.circular(4.0),
+                              ),
+                          child: Icon(
+                            Icons.add,
+                            // color: Colors.white,
+                            size: 20.0,
                           ),
                         ),
                       ),

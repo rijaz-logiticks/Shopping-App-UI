@@ -196,6 +196,7 @@ class _CartScreenState extends State<CartScreen> {
                       return Container(
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         child: ListView(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
                           children: [
                             ListView.separated(
                               itemCount: cartProducts.length,
@@ -212,18 +213,18 @@ class _CartScreenState extends State<CartScreen> {
                               },
                               separatorBuilder: (context, index) {
                                 return Container(
-                                  height: 2,
+                                  height: 1,
                                   margin: EdgeInsets.fromLTRB(2, 0, 2, 0),
                                   color: Colors.black.withOpacity(0.2),
                                   //child: SizedBox( height: 10.0)
                                 );
                               },
                             ),
-                            Container(
-                              height: 2,
-                              margin: EdgeInsets.fromLTRB(2, 0, 2, 0),
-                              color: Colors.black.withOpacity(0.2),
-                            ),
+                            // Container(
+                            //   height: 1,
+                            //   margin: EdgeInsets.fromLTRB(2, 0, 2, 0),
+                            //   color: Colors.black.withOpacity(0.2),
+                            // ),
                             SizedBox(
                               height: 10.0,
                             ),

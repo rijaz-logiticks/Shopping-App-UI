@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shopping_ui/blocs/cart_bloc/cart_bloc.dart';
+import 'package:shopping_ui/blocs/wishlist_bloc/wishlist_bloc.dart';
 import 'package:shopping_ui/models/product.dart';
 import 'package:shopping_ui/screens/product_detail_page.dart';
 import 'package:shopping_ui/theme/shopping_app_theme.dart';
@@ -115,28 +116,51 @@ class ProductItemView extends StatelessWidget {
                     },
                   ),
                 ),
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: Material(
-                    color: Colors.transparent,
-                    shadowColor: Colors.grey,
-                    child: InkWell(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(32.0),
-                      ),
-                      onTap: () {
-                        showSnack('Added to wishlist', context);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.favorite_border,
-                          color: Theme.of(context).primaryColor,
+                BlocBuilder(
+                  bloc: BlocProvider.of<WishlistBloc>(context),
+                  builder: (context, state) {
+                    return Positioned(
+                      top: 8,
+                      right: 8,
+                      child: Material(
+                        color: Colors.transparent,
+                        shadowColor: Colors.grey,
+                        child: InkWell(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(32.0),
+                          ),
+                          onTap: () {
+                            WishlistBloc wishlistBloc =
+                                BlocProvider.of<WishlistBloc>(context);
+                            if (wishlistBloc.wishlist.contains(product)) {
+                              wishlistBloc.add(RemoveFromWishlistEvent(
+                                  productId: product.id));
+                              showSnack('Removed from wishlist', context,
+                                  bgColor: Colors.red);
+                            } else {
+                              wishlistBloc.add(
+                                  AddToWishListEvent(productId: product.id));
+                              showSnack(
+                                'Added to wishlist',
+                                context,
+                              );
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              BlocProvider.of<WishlistBloc>(context)
+                                      .wishlist
+                                      .contains(product)
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 )
               ],
             ),
